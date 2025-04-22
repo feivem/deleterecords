@@ -1,8 +1,9 @@
 #include "admindashboard.h"
-#include "viewallrecordswindow.h"  // Include the new header for ViewAllRecordsWindow
-#include <QMessageBox>
-#include "mainwindow.h" // for returning to login
+#include "viewallrecordswindow.h" 
+#include "modifystudentrecords.h"
 #include "deleterecordwindow.h"
+#include <QMessageBox>
+#include "mainwindow.h" 
 
 AdminDashboard::AdminDashboard(QWidget *parent)
     : QWidget(parent)
@@ -10,19 +11,16 @@ AdminDashboard::AdminDashboard(QWidget *parent)
     setWindowTitle("Admin Dashboard");
     resize(350, 300);
 
-    // 🏷️ Title Label
     titleLabel = new QLabel("🛠️ Admin Dashboard\n", this);
     titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; text-align: center;");
     titleLabel->setAlignment(Qt::AlignCenter);
 
-    // 🔘 Buttons
     viewAllRecordsBtn = new QPushButton("View All Student Records", this);
     modifyRecordsBtn = new QPushButton("Modify Student Records", this);
     deleteRecordsBtn = new QPushButton("Delete Student Records", this);
     viewGradesAttendanceBtn = new QPushButton("View Grades & Attendance Logs", this);
     logoutBtn = new QPushButton("Logout", this);
 
-    // 📦 Layout
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(titleLabel);
     layout->addSpacing(10);
@@ -33,7 +31,6 @@ AdminDashboard::AdminDashboard(QWidget *parent)
     layout->addWidget(logoutBtn);
     setLayout(layout);
 
-    // 🔗 Connections
     connect(viewAllRecordsBtn, &QPushButton::clicked, this, &AdminDashboard::onViewAllRecordsClicked);
     connect(modifyRecordsBtn, &QPushButton::clicked, this, &AdminDashboard::onModifyRecordsClicked);
     connect(deleteRecordsBtn, &QPushButton::clicked, this, &AdminDashboard::onDeleteRecordsClicked);
@@ -51,11 +48,13 @@ void AdminDashboard::onViewAllRecordsClicked() {
 
 void AdminDashboard::onModifyRecordsClicked() {
     QMessageBox::information(this, "Modify Records", "✏️ Modify student record functionality here.");
+    ModifyStudentRecordsWindow * modifywindow = new ModifyStudentRecordsWindow(this);
+    modifywindow->show();
 }
 
 void AdminDashboard::onDeleteRecordsClicked() {
     DeleteRecordWindow *deleteWindow = new DeleteRecordWindow(this);
-    deleteWindow->setModal(true);  // Optional: to make it block other windows
+    deleteWindow->setModal(true);
     deleteWindow->show();
 }
 
